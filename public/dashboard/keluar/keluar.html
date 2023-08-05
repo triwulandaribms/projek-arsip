@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SURAT KELUAR</title>
+    <link rel="stylesheet" href="/keluar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    intergrity="sha512-kfkfwYDsLKI1wq6LFn18zNdLGxu9YAA1QvwINKs4PhcE1QSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXge10g"
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> 
+
+</head>
+<body>
+    <div class="sidebar-kiri">
+        <div class="brand-admin">
+            <i class="fa-solid fa-qrcode"></i>&nbsp;&nbsp;
+            <h1>E - ARSIP</h1>
+        </div>
+        <ul>
+            <li><i class="fa-brands fa-intercom"></i><span>&nbsp;&nbsp;<a href="/dashboard/home/home.html">Dashboard</a></span></li>
+            <li><i class="fa-solid fa-address-card"></i><span>&nbsp;&nbsp;<a href="/dashboard/about/about.html">About</a></span></li>
+            <li><i class="fa-solid fa-arrow-down"></i><span>&nbsp;&nbsp;<a href="/dashboard/tampil.html">Surat Masuk</a></span></li>
+            <li><i class="fa-solid fa-arrow-up"></i><span>&nbsp;&nbsp;<a href="#">Surat Keluar</a></span></li>
+            <li><i class="fa-solid fa-xmark"></i><span>&nbsp;&nbsp;<a href="/login/login.html">Log Out</a></span></li>
+        </ul>
+</div>
+
+<div class="container-bgs">
+        <div class="header-kop">
+            <div class="nav-navbar">
+                <div class="search-cari">
+                    <h1>FORM SURAT KELUAR</h1> 
+                </div>
+                <div class="user-guna">
+                    <a href="#" class="btn"><i class="fa-solid fa-plus"></i></a>
+                    <a href="#" class="btn"><i class="fa-regular fa-bell"></i></a>
+                    <a href="#" class="btn"><i class="fa-solid fa-user-tie"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="content-isi">
+            <div class="content-isi2">
+                <div class="payment-pay">
+                    <form name="tambah">
+                        <label>Nomor Surat</label>
+                        <input type="text" id="nomor-input" name="nomor_suratEx" placeholder="nomor surat"><br><br>
+                        <label>Judul surat</label>
+                        <input type="text" id="judul-input"name="judul_suratEx" placeholder="judul surat"><br><br>
+                        <label>Tujuan</label>
+                        <input type="text" id="tujuan-input" name="tujuanEx" placeholder="tujuan"><br><br>
+                        <label>Tanggal keluar</label>
+                        <input type="date" id="tglK-input" name="tanggal_keluarEx" placeholder="tanggal keluar"><br><br>
+                        <label>Jenis surat</label>
+                        <select id="jenis-input" name="jenis_suratEx">
+                            <option>Dinas</option>
+                            <option>Niaga</option>
+                            <option>Sosial</option>
+                            <option>Pribadi</option>
+                            <option>Pengantar</option>
+                            <option>Konfirmasi</option>
+                            <option>Instruksi</option>
+                        </select><br><br>
+                        
+                        <label>Sifat Surat</label>
+                        <select id="sft-input" name="sifat_suratEx">
+                            <option>Penting</option>
+                            <option>Rahasia</option>
+                            <option>Biasa</option>
+                            <option>Terbatas</option>
+                        </select><br><br>
+                        
+                        <label>
+                            photo
+                        <input type="file" name ="photoEx">
+                        </label>
+                        <button href="/TampilOut/TampilOut.html">SIMPAN</button><br>
+                </form>
+                </div>
+            </div>
+        </div>    
+    </div>     
+</body>
+<script>
+        document.tambah.onsubmit = async (e) => {
+        e.preventDefault();
+        const data = new FormData();
+        data.append("nomor_suratEx", document.tambah.nomor_suratEx.value);
+        data.append("judul_suratEx", document.tambah.judul_suratEx.value);
+        data.append("tujuanEx", document.tambah.tujuanEx.value);
+        data.append("tanggal_keluarEx", document.tambah.tanggal_keluarEx.value);
+        data.append("jenis_suratEx", document.tambah.jenis_suratEx.value);
+        data.append("sifat_suratEx", document.tambah.sifat_suratEx.value);
+        data.append("photoEx", document.tambah.photoEx.files[0]);
+        console.log(data);
+        await fetch("/api/surat/keluar", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: data,
+
+        });
+        location.href = "/dashboard/TampilOut/TampilOut.html";
+      };
+
+
+</script>
+</html>

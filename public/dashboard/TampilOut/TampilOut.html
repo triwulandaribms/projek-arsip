@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surat Masuk</title>
+    <link rel="stylesheet" href="/TampilOut.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    intergrity="sha512-kfkfwYDsLKI1wq6LFn18zNdLGxu9YAA1QvwINKs4PhcE1QSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXge10g"
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="shortcut icon" href="#" type="image/x-icon">
+
+</head>
+<body>
+    <div class="sidebar-kiri">
+        <div class="brand-admin">
+            <i class="fa-solid fa-qrcode"></i>&nbsp;&nbsp;
+            <h1>E - ARSIP</h1>
+        </div>
+        <ul>
+            <li><i class="fa-brands fa-intercom"></i><span>&nbsp;&nbsp;<a href="/dashboard/home/home.html">Dashboard</a></span></li>
+            <li><i class="fa-solid fa-address-card"></i><span>&nbsp;&nbsp;<a href="/dashboard/about/about.html">About</a></span></li>
+            <li><i class="fa-solid fa-arrow-down"></i><span>&nbsp;&nbsp;<a href="/dashboard/tampil.html">Surat Masuk</a></span></li>
+            <li><i class="fa-solid fa-arrow-up"></i><span>&nbsp;&nbsp;<a href="#">Surat Keluar</a></span></li>
+            <li><i class="fa-solid fa-xmark"></i><span>&nbsp;&nbsp;<a href="/login/login.html">Log Out</a></span></li>
+        </ul>
+    </div>
+
+<div class="container-bgs">
+        <div class="header-kop">
+            <div class="nav-navbar">
+                <div class="search-cari">
+                    <h1>DAFTAR SURAT KELUAR</h1> 
+                </div>
+                <div class="user-guna">
+                    <a href="#" class="btn"><i class="fa-solid fa-plus"></i></a>
+                    <a href="#" class="btn"><i class="fa-regular fa-bell"></i></a>
+                    <a href="#" class="btn"><i class="fa-solid fa-user-tie"></i></a>
+                </div>
+            </div>
+        </div>
+
+    
+<div class="content-isi">
+    <div class="content-isi2">
+            <div class="payment-pay">
+                    <div class="tittle-judul">
+                        <h2>Daftar Surat Keluar</h2>
+                    </div>
+                <table>
+                    <thead> 
+                    <tr>
+                        <th>NOMOR SURATEX</th>
+                        <th>JUDUL SURATEX</th>
+                        <th>TUJUANEX</th>
+                        <th>TANGGAL KELUAREX</th>
+                        <th>JENIS SURATEX</th>
+                        <th>SIFAT SURATEX</th>
+                        <th>PHOTOEX</th>
+                        <th>LIHAT DETAIL</th>
+                        <th>EDIT</th>
+                        <th>HAPUS</th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <div class="btn-next">
+                    <a href="../keluar/keluar.html" class= "btn-tambah">TAMBAH</a>
+                    <a href="/login/login.html" class= "btn-exit">EXIT</a>
+                </div>
+            </div>
+    </div>
+</div>
+<script>
+    
+async function get(){        
+    const res = await fetch("/api/surat/keluar",{
+        method : "GET",
+        headers: {                
+            "content-Type":"application/json",
+          },
+    });
+
+    const data = await res.json();
+    console.log(data);
+        for(let a = 0; a < data.length; a++){
+            const tr = document.createElement("tr");
+
+            const tdNomor = document.createElement("td");
+            tdNomor.textContent = data[a].nomor_suratEx;
+            tr.appendChild(tdNomor);
+
+            const tdJudul = document.createElement("td");
+            tdJudul.textContent = data[a].judul_suratEx;
+            tr.appendChild(tdJudul);
+            
+            const tdTujuan = document.createElement("td");
+            tdTujuan.textContent = data[a].tujuanEx;
+            tr.appendChild(tdTujuan);
+            
+            const tdKeluar = document.createElement("td");
+            tdKeluar.textContent = data[a].tanggal_keluarEx?.split('T')[0];
+            tr.appendChild(tdKeluar);
+
+            const tdJenis = document.createElement("td");
+            tdJenis.textContent = data[a].jenis_suratEx;
+            tr.appendChild(tdJenis);
+
+            const tdSifat = document.createElement("td");
+            tdSifat.textContent = data[a].sifat_suratEx;
+            tr.appendChild(tdSifat);
+
+            const tdfoto = document.createElement("td");
+            const imgfoto = document.createElement("img");
+            imgfoto.src = `/photos/${data[a].photoEx}`;
+            tdfoto.appendChild(imgfoto);
+            tr.appendChild(tdfoto);
+
+            const tdDtl = document.createElement("td");
+            const anchorDtl = document.createElement("a");
+            anchorDtl.textContent ="DetailEx";
+            anchorDtl.href = `/dashboard/detailEx/detailEx.html?nomor_suratEx=${data[a].nomor_suratEx}`;
+            tdDtl.appendChild(anchorDtl);
+            tr.appendChild(tdDtl);
+
+            const tdUpdate = document.createElement("td");
+            const anchorUpdate = document.createElement("a");
+            anchorUpdate.textContent ="update";
+            anchorUpdate.href=`/dashboard/update/update.html?nomor_suratEx=${data[a].nomor_suratEx}`;
+            tdUpdate.appendChild(anchorUpdate);
+            tr.appendChild(tdUpdate);
+
+            const tdDelet = document.createElement("td");
+            const buttonHapus = document.createElement("button");
+            buttonHapus.textContent = "hapus";
+            buttonHapus.onclick = () =>{
+                if(confirm(
+                    `Apakah yakin akan dihapus surat dengan:
+                    nomor_surat = ${data[a].nomor_suratEx} 
+                    judul_surat = ${data[a].judul_suratEx}
+                    tujuan = ${data[a].tujuanEx} 
+                    tanggal_keluar = ${data[a].tanggal_keluarEx} 
+                    jenis${data[a].jenis_suratEx} 
+                    ${data[a].sifat_suratEx} 
+                    ${data[a].photoEx}?`
+                )){
+                    fetch(`/api/surat/keluar${data[a].nomor_suratEx}`,{
+                        method: "DELETE",
+                        headers: {
+                            Authorization:`Bearer ${localStorage.getItem("token")}`,
+                        },
+                    });
+                    location.reload();
+                }
+            };
+            tdDelet.appendChild(buttonHapus);
+            tr.appendChild(tdDelet);
+
+            document.querySelector("tbody").appendChild(tr);
+        }
+    }
+    get();
+ 
+</script>
+
+</body>
+</html>
+

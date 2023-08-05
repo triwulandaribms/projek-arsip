@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tambah Surat</title>
+    <link rel="stylesheet" href="/tambah.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      intergrity="sha512-kfkfwYDsLKI1wq6LFn18zNdLGxu9YAA1QvwINKs4PhcE1QSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXge10g"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon" />
+  </head>
+  <body>
+    <div class="sidebar-kiri">
+      <div class="brand-admin">
+        <i class="fa-solid fa-qrcode"></i>&nbsp;&nbsp;
+        <h1>E - ARSIP</h1>
+      </div>
+      <ul>
+        <li>
+          <i class="fa-brands fa-intercom"></i>&nbsp;&nbsp;<span>Dashboard</span>
+        </li>
+        <li>
+          <i class="fa-solid fa-address-card" href="#"></i>&nbsp;&nbsp;<span>About</span>
+        </li>
+        <li>
+          <i class="fa-solid fa-arrow-down"></i>&nbsp;&nbsp;<span>Surat Masuk</span>
+        </li>
+        <li>
+          <i class="fa-solid fa-arrow-up"></i>&nbsp;&nbsp;<span>Surat Keluar</span>
+        </li>
+        <li>
+          <i class="fa-solid fa-xmark"></i>&nbsp;&nbsp;<span>Log Out</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="container-bgs">
+      <div class="header-kop">
+        <div class="nav-navbar">
+          <div class="search-cari">
+            <h1>FORM SURAT MASUK</h1>
+          </div>
+          <div class="user-guna">
+            <a href="#" class="btn"><i class="fa-solid fa-plus"></i></a>
+            <a href="#" class="btn"><i class="fa-regular fa-bell"></i></a>
+            <a href="#" class="btn"><i class="fa-solid fa-user-tie"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-isi">
+        <div class="content-isi2">
+          <div class="payment-pay">
+            <form name="nambah">
+              <label>Nomor Surat</label>
+              <input
+                type="text"
+                id="nomor-input"
+                name="nomor_surat"
+                placeholder="nomor surat"
+                required autofocus
+              /><br /><br />
+              <label>Judul surat</label>
+              <input
+                type="text"
+                id="judul-input"
+                name="judul_surat"
+                placeholder="judul surat"
+                required
+              /><br /><br />
+              <label>Asal Surat</label>
+              <input
+                type="text"
+                id="asal-input"
+                name="asal_surat"
+                placeholder="asal surat"
+              /><br /><br />
+              <label>Tanggal masuk</label>
+              <input
+                type="date"
+                id="tglM-input"
+                name="tanggal_masuk"
+                placeholder="tanggal masuk"
+                required
+              /><br /><br />
+              <label>Tanggal terima</label>
+              <input
+                type="date"
+                id="tglT-input"
+                name="tanggal_terima"
+                placeholder="tanggal terima"
+                required
+              /><br /><br />
+              <label>Jenis Surat</label>
+              <select id="jns-input" name="jenis_surat" required>
+                <option>Dinas</option>
+                <option>Niaga</option>
+                <option>Sosial</option>
+                <option>Pribadi</option>
+                <option>Pengantar</option>
+                <option>Konfirmasi</option>
+                <option>Instruksi</option></select
+              ><br /><br />
+              <label>Sifat Surat</label>
+              <select id="sft-input" name="sifat_surat" required>
+                <option>Penting</option>
+                <option>Rahasia</option>
+                <option>Biasa</option>
+                <option>Terbatas</option></select
+              ><br /><br />
+              <label>
+                photo
+                <input type="file" name="photo" />
+              </label>
+              <button href="/tampil.html">SIMPAN</button><br />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    document.nambah.onsubmit = async (e) => {
+      e.preventDefault();
+      const data = new FormData();
+      data.append("nomor_surat", document.nambah.nomor_surat.value);
+      data.append("judul_surat", document.nambah.judul_surat.value);
+      data.append("asal_surat", document.nambah.asal_surat.value);
+      data.append("tanggal_masuk", document.nambah.tanggal_masuk.value);
+      data.append("tanggal_terima", document.nambah.tanggal_terima.value);
+      data.append("jenis_surat", document.nambah.jenis_surat.value);
+      data.append("sifat_surat", document.nambah.sifat_surat.value);
+      data.append("photo", document.nambah.photo.files[0]);
+      console.log(data);
+      await fetch("/api/surat", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: data,
+      });
+        location.href = "/dashboard/tampil.html";
+    };
+
+  </script>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Surat</title>
+    <link rel="stylesheet" href="/detail.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    intergrity="sha512-kfkfwYDsLKI1wq6LFn18zNdLGxu9YAA1QvwINKs4PhcE1QSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXge10g"
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+</head>
+<body>
+    
+    <h3>INFORMASI DETAIL SURAT KELUAR</h3>
+    <hr>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <img>
+
+
+
+<script>
+    const searchParams = new URLSearchParams(location.search);
+
+    fetch(`/api/surat/keluar${searchParams.get("nomor_suratEx")}`,{
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+    })
+
+    .then((response) => response.json())
+    .then((data)=>{
+        const divNomor = document.createElement("div");
+        divNomor.textContent = `nomor_suratEx: ${data.nomor_suratEx}`;
+        document.body.appendChild(divNomor);
+
+        const divJudul = document.createElement("div");
+        divJudul.textContent = `judul_suratEx: ${data.judul_suratEx}`;
+        document.body.appendChild(divJudul);
+
+        const divTujuan = document.createElement("div");
+        divTujuan.textContent = `tujuanEx: ${data.tujuanEx}`;
+        document.body.appendChild(divTujuan);
+
+        const divKeluar = document.createElement("div");
+        divKeluar.textContent = `tanggal_keluarEx: ${data.tanggal_keluarEx?.split('T')[0]}`;
+        document.body.appendChild(divKeluar);
+
+
+        const divJenis = document.createElement("div");
+        divJenis.textContent = `jenis_suratEx: ${data.jenis_suratEx}`;
+        document.body.appendChild(divJenis);
+
+
+        const divSifat = document.createElement("div");
+        divSifat.textContent = `sifat_suratEx: ${data.sifat_suratEx}`;
+        document.body.appendChild(divSifat);
+
+        const imgfoto = document.createElement("img");
+        const text=document.createElement("div");
+        text.textContent=`PhotoEx:`;
+        imgfoto.src = `/photos/${data.photoEx}`;
+        document.body.appendChild(text);
+        document.body.appendChild(imgfoto);
+    });
+    
+</script>
+</body>
+</html>

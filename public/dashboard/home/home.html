@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet"  href="/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        intergrity="sha512-kfkfwYDsLKI1wq6LFn18zNdLGxu9YAA1QvwINKs4PhcE1QSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXge10g"
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+        <link rel="shortcut icon" href="#" >
+
+</head>
+<body>
+    <div class="sidebar-kiri">
+        <div class="brand-admin">
+            <i class="fa-solid fa-qrcode"></i>&nbsp;&nbsp;
+            <h1>E - ARSIP</h1>
+        </div>
+        <ul>
+            <li><i class="fa-brands fa-intercom"></i><span>&nbsp;&nbsp;<a href="#">Dashboard</a></span></li>
+            <li><i class="fa-solid fa-address-card"></i><span>&nbsp;&nbsp;<a href="/dashboard/about/about.html">About</a></span></li>
+            <li><i class="fa-solid fa-arrow-down"></i><span>&nbsp;&nbsp;<a href="/dashboard/tampil.html">Surat Masuk</a></span></li>
+            <li><i class="fa-solid fa-arrow-up"></i><span>&nbsp;&nbsp;<a href="/dashboard/keluar/keluar.html">Surat Keluar</a></span></li>
+            <li><i class="fa-solid fa-xmark"></i><span>&nbsp;&nbsp;<a href="/login/login.html">Log Out</a></span></li>
+
+        </ul>
+    </div>
+
+    <div class="container-bgs">
+        <div class="header-kop">
+            <div class="nav-navbar">
+                <div class="search-cari">
+                    <h1>SELAMAT DATANG ADMIN</h1> 
+                </div>
+                <div class="user-guna">
+                    <a href="#" class="btn"><i class="fa-solid fa-plus"></i></a>
+                    <a href="#" class="btn"><i class="fa-regular fa-bell"></i></a>
+                    <a href="#" class="btn"><i class="fa-solid fa-user-tie"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-isi">
+            <div class="cards-kartu">
+                <div class="cards-kartu1">
+                    <div class="box-kotak">
+                        <h1>25</h1>
+                        <h3>Jumlah Surat Masuk</h3>
+                    </div>
+                    <div class="icon-font">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                </div>
+
+                <div class="cards-kartu1">
+                    <div class="box-kotak">
+                        <h1>40</h1>
+                        <h3>Jumlah Surat Keluar</h3>
+                    </div>
+                    <div class="icon-font">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                </div>
+
+                <div class="cards-kartu1">
+                 <div class="box-kotak">
+                        <h1>12</h1>
+                        <h3>Jumlah Surat Dicari</h3>
+                    </div>
+                    <div class="icon-font">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-isi2">
+                <div class="payment-pay">
+                    <div class="tittle-judul">
+                        <h2>Data Surat Terupdate</h2>
+                        <a href="#" class="btn-tombol">Lihat Semua</a>
+                    </div>
+                    <table>
+                        <tr>
+                            <th>Nomor surat</th>
+                            <th>Judul surat</th>
+                            <th>asal surat</th>
+                            <th>Tanggal surat</th>
+                            <th>sifat surat</th>
+                            <th>jenis surat</th>
+                            <th>Aksi</th>
+                        </tr>
+                        <tr>
+                            <td>005</td>
+                            <td>tagihan pembayaran listrik</td>
+                            <td>kantor PLN</td>
+                            <td>30 November 2022 </td>
+                            <td>surat instruksi</td>
+                            <td>Penting</td>
+                            <td><a href="#" class="btn-tombol">Lihat</a></td>
+                        </tr>
+                        <tr>
+                            <td>002</td>
+                            <td>pertemuan antar client</td>
+                            <td>perusahaan gemerlang </td>
+                            <td>08 Desember 2022 </td>
+                            <td>surat dinas</td>
+                            <td>biasa</td>
+                            <td><a href="#" class="btn-tombol">Lihat</a></td>
+                        </tr>
+                        <tr>
+                            <td>004</td>
+                            <td>pembayaran faktur</td>
+                            <td>pt adipratama</td>
+                            <td>30 Maret 2022 </td>
+                            <td>Surat instruksi</td>
+                            <td>biasa</td>
+                            <td><a href="#" class="btn-tombol">Lihat</a></td>
+                        </tr>
+                        <tr>
+                            <td>001</td>
+                            <td>pembelian barang elektronik</td>
+                            <td>toko perlengkapan dan perabotan</td>
+                            <td>15 Januari 2022 </td>
+                            <td>Surat instruksi</td>
+                            <td>Penting</td>
+                            <td><a href="#" class="btn-tombol">Lihat</a></td>
+                        </tr>
+                        <tr>
+                            <td>002</td>
+                            <td>penyaluran bantuan</td>
+                            <td>yayasan</td>
+                            <td>10 April 2022 </td>
+                            <td>Surat sosial</td>
+                            <td>biasa</td>
+                            <td><a href="#" class="btn-tombol">Lihat</a></td>
+                        </tr>
+                    </table><br><br><br><br><br><br>
+                    <div class="btn-lanjut">
+                        <a href="../about/about.html" class="btn-next">NEXT</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

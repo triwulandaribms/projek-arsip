@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDIT SURAT</title>
+    <link rel="stylesheet" href="/update.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    intergrity="sha512-kfkfwYDsLKI1wq6LFn18zNdLGxu9YAA1QvwINKs4PhcE1QSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXge10g"
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="shortcut icon" href="#" type="image/x-icon">
+
+</head>
+<body>
+    <div class="sidebar-kiri">
+        <div class="brand-admin">
+            <i class="fa-solid fa-qrcode"></i>&nbsp;&nbsp;
+            <h1>E - ARSIP</h1>
+        </div>
+        <ul>
+            <li><i class="fa-brands fa-intercom"></i><span>&nbsp;&nbsp;Dashboard/span></li>
+            <li><i class="fa-solid fa-address-card"></i><span>&nbsp;&nbsp;About</span></li>
+            <li><i class="fa-solid fa-arrow-down"></i><span>&nbsp;&nbsp;Surat Masuk</span></li>
+            <li><i class="fa-solid fa-arrow-up"></i><span>&nbsp;&nbsp;Surat Keluar</span></li>
+            <li><i class="fa-solid fa-xmark"></i><span>&nbsp;&nbsp;Log Out</span></li>
+        </ul>
+    </div>
+
+<div class="container-bgs">
+        <div class="header-kop">
+            <div class="nav-navbar">
+                <div class="search-cari">
+                    <h1>EDIT SURAT</h1> 
+                </div>
+                <div class="user-guna">
+                    <a href="#" class="btn"><i class="fa-solid fa-plus"></i></a>
+                    <a href="#" class="btn"><i class="fa-regular fa-bell"></i></a>
+                    <a href="#" class="btn"><i class="fa-solid fa-user-tie"></i></a>
+                </div>        
+            </div>
+        </div>
+<div class="content-isi">
+    <div class="content-isi2">
+        <div class="payment-pay">
+            <form name="edit">
+                <label>Nomor Surat</label>
+                <input type="text"  name="nomor_suratEx" required autofocus><br><br>
+                <label>Judul surat</label>
+                <input type="text" name="judul_suratEx" required><br><br>
+                <label>Tujuan Surat</label>
+                <input type="text" name="tujuanEx" required><br><br>
+                <label>Tanggal masuk</label>
+                <input type="date" name="tanggal_keluarEx" required><br><br>
+                <label>Jenis Surat</label>
+                <select name="jenis_suratEx" required>
+                    <option>Dinas</option>
+                    <option>Niaga</option>
+                    <option>Sosial</option>
+                    <option>Pribadi</option>
+                    <option>Pengantar</option>
+                    <option>Konfirmasi</option>
+                    <option>Instruksi</option>
+                </select><br><br>
+                <label>Sifat Surat</label>
+                <select name="sifat_suratEx" required>
+                    <option>Penting</option>
+                    <option>Rahasia</option>
+                    <option>Biasa</option>
+                    <option>Terbatas</option>
+                </select><br><br>
+                <button>SIMPAN</button><br>
+            </form>
+ 
+ <script>
+     const searchParams = new URLSearchParams(location.search);
+
+     fetch(`/api/surat/keluar${searchParams.get("nomor_suratEx")}`,{
+         headers: {
+            Authorization :`Bearer ${localStorage.getItem("token")}`,
+         },
+     })
+
+     .then((response)=> response.json())
+     .then((data)=>{
+         document.edit.nomor_suratEx.value = data.nomor_suratEx;
+         document.edit.judul_suratEx.value = data.judul_suratEx;
+         document.edit.tujuanEx.value = data.tujuanEx;
+         document.edit.tanggal_keluarEx.value = data.tanggal_keluarEx?.split('T')[0];
+         document.edit.jenis_suratEx.value = data.jenis_suratEx;
+         document.edit.sifat_suratEx.value = data.sifat_suratEx;
+     });
+
+     document.edit.onsubmit = async (e) =>{
+         e.preventDefault();
+         const nomor_suratEx = document.edit.nomor_suratEx.value;
+         const judul_suratEx = document.edit.judul_suratEx.value;
+         const tujuanEx = document.edit.tujuanEx.value;
+         const tanggal_keluarEx = document.edit.tanggal_keluarEx.value;
+         const jenis_suratEx = document.edit.jenis_suratEx.value;
+         const sifat_suratEx = document.edit.sifat_suratEx.value;
+        
+
+         await fetch(`/api/surat/keluar${searchParams.get("nomor_suratEx")}`,{
+             method: "PUT",
+             headers: {
+                 "content-Type": "application/json",
+                 Authorization: `Berarer ${localStorage.getItem("token")}`,
+             },
+             body: JSON.stringify({
+                 nomor_suratEx,
+                 judul_suratEx,
+                 tujuanEx,
+                 tanggal_keluarEx,
+                 jenis_suratEx,
+                 sifat_suratEx,
+             }),
+         });
+         location.href = "/dashboard/TampilOut/TampilOut.html"
+     }
+
+ </script>
+</body>
+</html>

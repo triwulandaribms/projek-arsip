@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LOGIN</title>
+    <link rel="stylesheet" href="../login.css" />
+    <link rel="shortcut icon" href="#" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="login">
+        <form name="login">
+          <h1>LOGIN</h1>
+          <hr />
+          <p>E-Arsip Digital</p>
+          <label for="">Username</label>
+          <input id="user" placeholder="username" type="text" name="username" />
+          <label for="">Password</label>
+          <input
+            id="pass"
+            placeholder="password"
+            type="password"
+            name="passwordd"
+          />
+          <button id="masuk">Login</button>
+          <p>
+            <a href="./forgotpass.html">Forgot Password?</a>
+          </p>
+        </form>
+      </div>
+      <div class="picture">
+        <img src="../assets/arsip.jpg" alt="" />
+      </div>
+    </div>
+    <script>
+      document.login.onsubmit = async (e) => {
+        e.preventDefault();
+
+        const response = await fetch("/api/login", {
+          method: "POST",
+          headers: {
+            "content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            passwordd: document.login.passwordd.value,
+            username: document.login.username.value,
+          }),
+        });
+
+        if (response.ok) {
+          const token = await response.text();
+          localStorage.setItem("token", token);
+          location.href = "/dashboard/home/home.html";
+        } else {
+          const message = await response.text();
+          alert(message);
+        }
+      };
+    </script>
+  </body>
+</html>

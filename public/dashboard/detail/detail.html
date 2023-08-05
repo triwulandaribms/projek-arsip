@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Surat</title>
+    <link rel="stylesheet" href="/detail.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    intergrity="sha512-kfkfwYDsLKI1wq6LFn18zNdLGxu9YAA1QvwINKs4PhcE1QSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXge10g"
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+</head>
+<body>
+    
+    <h3>INFORMASI DETAIL SURAT MASUK</h3>
+    <hr>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <img>
+
+
+
+<script>
+    const searchParams = new URLSearchParams(location.search);
+
+    fetch(`/api/surat/${searchParams.get("nomor_surat")}`,{
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+    })
+
+    .then((response) => response.json())
+    .then((data)=>{
+        const divNomor_surat = document.createElement("div");
+        divNomor_surat.textContent = `nomor_surat: ${data.nomor_surat}`;
+        document.body.appendChild(divNomor_surat);
+
+        const divJudul_surat = document.createElement("div");
+        divJudul_surat.textContent = `Judul_surat: ${data.judul_surat}`;
+        document.body.appendChild(divJudul_surat);
+
+        const divAsal_surat = document.createElement("div");
+        divAsal_surat.textContent = `Asal_surat: ${data.asal_surat}`;
+        document.body.appendChild(divAsal_surat);
+
+        const divTanggal_masuk = document.createElement("div");
+        divTanggal_masuk.textContent = `Tanggal_masuk: ${data.tanggal_masuk?.split('T')[0]}`;
+        document.body.appendChild(divTanggal_masuk);
+
+        const divTanggal_terima = document.createElement("div");
+        divTanggal_terima.textContent = `Tanggal_terima: ${data.tanggal_terima?.split('T')[0]}`;
+        document.body.appendChild(divTanggal_terima);
+
+
+        const divJenis_surat = document.createElement("div");
+        divJenis_surat.textContent = `Jenis_surat: ${data.jenis_surat}`;
+        document.body.appendChild(divJenis_surat);
+
+
+        const divSifat_surat = document.createElement("div");
+        divSifat_surat.textContent = `Sifat_surat: ${data.sifat_surat}`;
+        document.body.appendChild(divSifat_surat);
+
+        const imgPhoto = document.createElement("img");
+        const text=document.createElement("div");
+        text.textContent=`Photo:`;
+        imgPhoto.src = `/photos/${data.photo}`;
+        document.body.appendChild(text);
+        document.body.appendChild(imgPhoto);
+
+
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LOGIN</title>
+    <link rel="stylesheet" href="../password.css" />
+    <link rel="shortcut icon" href="#" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Forgot Password</h1>
+      <form id="forgot-form">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required />
+        <label for="passwordd">New Password:</label>
+        <input type="passwordd" id="passwordd" name="passwordd" required />
+        <button type="submit">Reset Password</button>
+      </form>
+    </div>
+  </body>
+  <script>
+    document.getElementById("forgot-form").onsubmit = async (e) => {
+      e.preventDefault();
+      const username = document.getElementById("username").value;
+      const passwordd = document.getElementById("passwordd").value;
+
+      const response = await fetch(`/api/forgotpass`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          passwordd,
+        }),
+      });
+
+      if (response.ok) {
+        location.href = "./login.html";
+      } else {
+        console.error("gagal ganti password");
+      }
+    };
+  </script>
+</html>

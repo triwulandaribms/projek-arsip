@@ -81,7 +81,13 @@ export async function searchSurat(req, res) {
 
   if (req.body.jenis_surat.includes("sosial")) {
     res.json(data.rows);
-  } else {
-    res.send("sifat surat tidak ditemukan");
+  } else if(req.body.jenis_surat.includes("penting")) {
+    res.json(data.rows);
+  }else if(req.body.jenis_surat.includes("biasa")){
+    res.json(data.rows);
+  }else if(req.body.jenis_surat.includes("niaga")){
+    res.json(data.rows);
+  }else{
+    res.send("jenis surat tidak ditemukan);
   }
 }

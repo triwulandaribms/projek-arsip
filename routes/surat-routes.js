@@ -79,15 +79,8 @@ export async function searchSurat(req, res) {
     await conn.query(`SELECT * FROM SuratIn WHERE jenis_surat = '${req.body.jenis_surat}'
   `);
 
-  if (req.body.jenis_surat.includes("sosial")) {
+  if (req.body.jenis_surat.includes("sosial") || req.body.jenis_surat.includes("penting") || 
+      req.body.jenis_surat.includes("biasa") || req.body.jenis_surat.includes("niaga")) {
     res.json(data.rows);
-  } else if(req.body.jenis_surat.includes("penting")) {
-    res.json(data.rows);
-  }else if(req.body.jenis_surat.includes("biasa")){
-    res.json(data.rows);
-  }else if(req.body.jenis_surat.includes("niaga")){
-    res.json(data.rows);
-  }else{
-    res.send("jenis surat tidak ditemukan);
-  }
+  } 
 }

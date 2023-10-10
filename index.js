@@ -23,21 +23,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
-// function auth(req, res, next) {
-//   if (req.headers.authorization) {
-//     const token = req.headers.authorization.split(" ")[1];
-//     jwt.verify(token, "rahasia", async (err, _decoded) => {
-//       if (!err) {
-//         next();
-//       } else {
-//         res.status(401).send("Token salah.");
-//       }
-//     });
-//   } else {
-//     res.status(401).send("Token belum ada.");
-//   }
-// }
-
 app.use(cookieParser());
 
 app.use((req, res, next) => {

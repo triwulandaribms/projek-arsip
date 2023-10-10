@@ -2,6 +2,7 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import multer from "multer";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import { login } from "./routes/auth-routes.js";
 import { forgotPassword } from "./routes/forgot-password.js";
 import {
@@ -22,20 +23,58 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
-function auth(req, res, next) {
-  if (req.headers.authorization) {
-    const token = req.headers.authorization.split(" ")[1];
-    jwt.verify(token, "rahasia", async (err, _decoded) => {
-      if (!err) {
+// function auth(req, res, next) {
+//   if (req.headers.authorization) {
+//     const token = req.headers.authorization.split(" ")[1];
+//     jwt.verify(token, "rahasia", async (err, _decoded) => {
+//       if (!err) {
+//         next();
+//       } else {
+//         res.status(401).send("Token salah.");
+//       }
+//     });
+//   } else {
+//     res.status(401).send("Token belum ada.");
+//   }
+// }
+
+app.use(cookieParser());
+
+app.use((req, res, next) => {
+  if (req.path === "/api/login" || req.path.startsWith("/assets")) {
+    next();
+  } else {
+    let authorized = false;
+    if (req.cookies.token) {
+      try {
+        req.me = jwt.verify(req.cookies.token, process.env.SECRET_KEY);
+        authorized = true;
+      } catch (err) {
+        res.setHeader("Cache-Control", "no-store");
+        res.clearCookie("token");
+      }
+    }
+    if (authorized) {
+      if (req.path.startsWith("/login")) {
+        res.redirect("/");
+      } else {
+        next();
+      }
+    } else {
+      if (req.path.startsWith("/login")) {
         next();
       } else {
-        res.status(401).send("Token salah.");
+        if (req.path.startsWith("/api")) {
+          res.status(401);
+          res.send("Anda harus login terlebih dahulu.");
+        } else {
+          res.redirect("/login");
+        }
       }
-    });
-  } else {
-    res.status(401).send("Token belum ada.");
+    }
   }
-}
+});
+
 
 const upload = multer({ dest: "public/photos" });
 

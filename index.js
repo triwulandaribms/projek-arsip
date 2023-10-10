@@ -17,13 +17,14 @@ import {
   deleteSuratKeluarByNomorSurat,
   searchSurat,
 } from "./routes/surat-routes.js";
+import tampilData from "./routes/auth-routes.js";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
-app.use(cookieParser());
+app.get("/api/data", tampilData);
 
 app.use((req, res, next) => {
   if (req.path === "/api/login" || req.path.startsWith("/assets")) {
@@ -60,6 +61,7 @@ app.use((req, res, next) => {
   }
 });
 
+app.use(cookieParser());
 
 const upload = multer({ dest: "public/photos" });
 
@@ -68,8 +70,6 @@ app.post("/api/login", login);
 
 // END POINT API = FORGOT PASSWORD
 app.put("/api/forgotpass", forgotPassword);
-
-app.use(auth);
 
 // END POINT API = MENAMPILKAN DATA SURAT MASUK
 app.get("/api/surat/keluar", getAllSuratKeluar);

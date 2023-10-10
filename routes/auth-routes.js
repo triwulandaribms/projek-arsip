@@ -1,7 +1,8 @@
 import conn from "../database.js";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 
-export async function login(req, res) {
+export default async function login(req, res) {
   const rows = await conn.query(
     `SELECT * FROM masuk WHERE username = '${req.body.username}'`
   );

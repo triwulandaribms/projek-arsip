@@ -1,6 +1,6 @@
 import conn from "../database.js";
 
-export async function forgotPassword(req, res) {
+export default async function forgotPassword(req, res) {
   const rows = await client.query(
     `SELECT * FROM masuk WHERE username = '${req.body.username}'`
   );
@@ -13,4 +13,4 @@ export async function forgotPassword(req, res) {
   }
 }
 
-export default forgotPassword;
+

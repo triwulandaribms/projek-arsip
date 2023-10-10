@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import multer from "multer";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import { login } from "./routes/auth-routes.js";
+import login from "./routes/auth-routes.js";
 import { forgotPassword } from "./routes/forgot-password.js";
 import {
   getAllSuratMasuk,

@@ -7,16 +7,27 @@ export default async function login(req, res) {
     `SELECT * FROM masuk WHERE username = '${req.body.username}'`
   );
   console.log(rows);
+  
+  let cek;
+  
   if (rows.length > 0) {
-    if (req.body.passwordd === rows[0].passwordd) {
-      const token = jwt.sign(rows[0], "rahasia");
-      res.send(token);
+    if (
+      req.body.username === rows[0].username &&
+      (await bcrypt.compare(req.body.passwordd, rows[0].passwordd))
+    ) {
+      cek = true;
+    }
+
+    if (cek === true) {
+      const token = jwt.sign(rows[0], process.env.SECRET_KEY);
+      res.cookie("token", token);
+      res.send("berhasil login");
+      console.log(token);
     } else {
-      res.status(401).send("kata sandi salah");
+      res.send("user belum ada");
     }
   } else {
-    res.status(401).send("Nama pengguna tidak ditemukan.");
+    res.send("username atau password salah");
   }
 }
 
-export default login;

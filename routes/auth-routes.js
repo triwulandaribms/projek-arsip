@@ -7,6 +7,18 @@ export async function tampilData(_req, res) {
   res.send(rows[0]);
   console.log(rows[0]);
 }
+export async function registrasi(req, res){
+  const rows = await conn.query(`SELECT * FROM masuk WHERE passwordd = '${req.body.passowrdd}'`);
+  if(rows === 1){
+    res.send("data tidak boleh sama");
+  }else{
+    const salt = await bcrypt.gentSalt();
+    const hash = await bcrypt.hash(req.body.passwordd, salt);
+    await conn.query (`INSERT INTO masuk VALUES('${req.body.username}', '${hash}')`);
+    res.send("berhasil registrasi");
+  }
+  
+}
 
 export default async function login(req, res) {
   const rows = await conn.query(

@@ -4,14 +4,13 @@ import bcrypt from "bcryptjs";
 
 export async function tampilData(_req, res) {
   const data = await conn.query(`SELECT * FROM masuk`);
-  res.send(data[0]);
-  console.log(data[0]);
+  res.send(data);
 }
 export async function registrasi(req, res) {
   const data = await conn.query(
     `SELECT * FROM masuk WHERE passwordd = '${req.body.passwordd}'`
   );
-  if (data[0].passwordd === req.body.passwordd) {
+  if (data.length === 1) {
     res.send("password tidak boleh sama");
   } else {
     const salt = await bcrypt.genSalt();
@@ -24,18 +23,26 @@ export async function registrasi(req, res) {
 }
 
 export default async function login(req, res) {
-  const data = await conn.query(
+  const rows = await conn.query(
     `SELECT * FROM masuk WHERE username = '${req.body.username}'`
   );
-  console.log(data);
+  console.log(rows);
 
-  if (data.length > 0) {
-    let cek = await bcrypt.compare(req.body.passowrdd, data[0].passowrdd);
+  let cek;
+  if (rows.length > 0) {
+    if (
+      req.body.username === rows[0].username ||
+      (await bcrypt.compare(req.body.passwordd, rows[0].passwordd))
+    ) {
+      cek = true;
+    }
+
+    console.log(cek);
+
     if (cek === true) {
-      const token = jwt.sign(data[0], process.env.SECRET_KEY);
+      const token = jwt.sign(rows[0], process.env.SECRET_KEY);
       res.cookie("token", token);
       res.send("berhasil login");
-      console.log(token);
     } else {
       res.send("user belum ada");
     }

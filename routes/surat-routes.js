@@ -2,17 +2,17 @@ import conn from "../database.js";
 
 // BAGIAN SURAT MASUK
 export async function getAllSuratMasuk(_req, res) {
-  const rows = await conn.query(
+  const data = await conn.query(
     `SELECT * FROM SuratIn ORDER BY nomor_surat ASC`
   );
-  res.send(rows);
+  res.send(data);
 }
 
 export async function getAllSuratMasukByNomorSurat(req, res) {
-  const rows = await conn.query(
+  const data = await conn.query(
     `SELECT * FROM SuratIn WHERE nomor_surat = '${req.params.nomor_surat}'`
   );
-  res.send(rows[0]);
+  res.send(data[0]);
 }
 
 export async function addSuratMasuk(req, res) {
@@ -45,17 +45,17 @@ export async function addSuratKeluar(req, res) {
 }
 
 export async function getAllSuratKeluar(_req, res) {
-  const rows = await conn.query(
+  const data = await conn.query(
     `SELECT * FROM SuratEx ORDER BY nomor_suratEx ASC`
   );
-  res.send(rows);
+  res.send(data);
 }
 
 export async function getAllSuratKeluarByNomorSurat(req, res) {
-  const rows = await conn.query(
+  const data = await conn.query(
     `SELECT * FROM SuratEx WHERE nomor_suratEx = '${req.params.nomor_suratEx}'`
   );
-  res.send(rows[0]);
+  res.send(data[0]);
 }
 
 export async function editSuratKeluarByNomorSurat(req, res) {
@@ -79,8 +79,12 @@ export async function searchSurat(req, res) {
     await conn.query(`SELECT * FROM SuratIn WHERE jenis_surat = '${req.body.jenis_surat}'
   `);
 
-  if (req.body.jenis_surat.includes("sosial") || req.body.jenis_surat.includes("penting") || 
-      req.body.jenis_surat.includes("biasa") || req.body.jenis_surat.includes("niaga")) {
+  if (
+    req.body.jenis_surat.includes("sosial") ||
+    req.body.jenis_surat.includes("penting") ||
+    req.body.jenis_surat.includes("biasa") ||
+    req.body.jenis_surat.includes("niaga")
+  ) {
     res.json(data.rows);
-  } 
+  }
 }

@@ -12,5 +12,3 @@ export default async function forgotPassword(req, res) {
     res.send("username harus sama");
   }
 }
-
-

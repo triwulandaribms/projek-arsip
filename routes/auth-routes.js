@@ -9,12 +9,12 @@ export async function tampilData(_req, res) {
 }
 export async function registrasi(req, res) {
   const data = await conn.query(
-    `SELECT * FROM masuk WHERE passwordd = '${req.body.passowrdd}'`
+    `SELECT * FROM masuk WHERE passwordd = '${req.body.passwordd}'`
   );
-  if (data === 1) {
-    res.send("data tidak boleh sama");
+  if (data[0].passwordd === req.body.passwordd) {
+    res.send("password tidak boleh sama");
   } else {
-    const salt = await bcrypt.gentSalt();
+    const salt = await bcrypt.genSalt();
     const hash = await bcrypt.hash(req.body.passwordd, salt);
     await conn.query(
       `INSERT INTO masuk VALUES('${req.body.username}', '${hash}')`
@@ -29,10 +29,8 @@ export default async function login(req, res) {
   );
   console.log(data);
 
-  let cek;
-
   if (data.length > 0) {
-    const cek = await bcrypt.compare(req.body.passowrdd, data[0].passowrdd);
+    let cek = await bcrypt.compare(req.body.passowrdd, data[0].passowrdd);
     if (cek === true) {
       const token = jwt.sign(data[0], process.env.SECRET_KEY);
       res.cookie("token", token);

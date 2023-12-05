@@ -2,10 +2,10 @@ import conn from "../database.js";
 
 // BAGIAN SURAT MASUK
 export async function getAllSuratMasuk(_req, res) {
-  const data = await conn.query(
+  const rows = await conn.query(
     `SELECT * FROM SuratIn ORDER BY nomor_surat ASC`
   );
-  res.send(data);
+  res.send(rows);
 }
 
 export async function getAllSuratMasukByNomorSurat(req, res) {

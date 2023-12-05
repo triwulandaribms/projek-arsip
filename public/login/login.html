@@ -37,14 +37,22 @@
       document.login.onsubmit = async (e) => {
         e.preventDefault();
 
+        const username = document.login.username.value;
+        const passwordd = document.login.passwordd.value;
+
+        if (!username || !passwordd) {
+          alert("Username dan password harus diisi.");
+          return;
+        }
+
         const response = await fetch("/api/login", {
           method: "POST",
           headers: {
             "content-Type": "application/json",
           },
           body: JSON.stringify({
-            passwordd: document.login.passwordd.value,
-            username: document.login.username.value,
+            username,
+            passwordd,
           }),
         });
 
@@ -53,8 +61,12 @@
           localStorage.setItem("token", token);
           location.href = "/dashboard/home/home.html";
         } else {
-          const message = await response.text();
-          alert(message);
+          const pesanError = await response.text();
+          if (pesanError === "username atau passwordd salah") {
+            alert("Username atau password salah. Silakan coba lagi.");
+          } else {
+            alert(pesanError);
+          }
         }
       };
     </script>

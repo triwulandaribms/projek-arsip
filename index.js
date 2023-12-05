@@ -26,6 +26,8 @@ app.use(express.static("public"));
 app.get("/api/data", tampilData);
 app.post("/api/registrasi", registrasi);
 
+app.use(cookieParser());
+
 app.use((req, res, next) => {
   if (req.path === "/api/login" || req.path.startsWith("/assets")) {
     next();
@@ -60,8 +62,6 @@ app.use((req, res, next) => {
     }
   }
 });
-
-app.use(cookieParser());
 
 const upload = multer({ dest: "public/photos" });
 
@@ -101,4 +101,4 @@ app.delete("/api/surat/:nomor_surat", deleteSuratMasukByNomorSurat);
 // END POINT API = UNTUK SERACH SURAT
 app.post("/api/search", searchSurat);
 
-app.listen(3000, () => console.log("server sedang berjalan"));
+app.listen(3000, () => console.log("server sedang berjalan di port 3000"));
